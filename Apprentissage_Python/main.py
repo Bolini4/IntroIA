@@ -11,41 +11,63 @@ from keras.layers import Flatten, Dense, Dropout
 #Split in like 80% for training and 20% for testing
 
 
-def load_data(data_dir, num_samples_per_class=10, num_test_samples=3):
+import os
+from PIL import Image
+import numpy as np
+
+def load_data(data_dir, num_samples_per_class=10):
     images_train = []
     labels_train = []
     images_test = []
     labels_test = []
+    images_validation = []
+    labels_validation = []
+    
     for digit in range(10):
+        train_dir = os.path.join(data_dir, 'train')
+        test_dir = os.path.join(data_dir, 'test')
+        validation_dir = os.path.join(data_dir, 'validation')
+
         for sample_idx in range(num_samples_per_class):
-            filename = f"{digit}_{sample_idx}.bmp"
-            img = Image.open(os.path.join(data_dir, filename))
-            img = img.convert('L')
-            img = img.resize((28,28)) 
-            if sample_idx < num_samples_per_class - num_test_samples:
-                images_train.append(img)
+            # Load training images
+            train_filename = f"{digit}_{sample_idx}.bmp"
+            train_file_path = os.path.join(train_dir, train_filename)
+            if os.path.exists(train_file_path):
+                img_train = Image.open(train_file_path).convert('L')
+                img_train = img_train.resize((28, 28))
+                images_train.append(np.array(img_train))
                 labels_train.append(digit)
-            else:
-                images_test.append(img) 
+
+            # Load testing images
+            test_filename = f"{digit}_{sample_idx}.bmp"
+            test_file_path = os.path.join(test_dir, test_filename)
+            if os.path.exists(test_file_path):
+                img_test = Image.open(test_file_path).convert('L')
+                img_test = img_test.resize((28, 28))
+                images_test.append(np.array(img_test))
                 labels_test.append(digit)
 
-    return np.array(images_train), np.array(images_test), np.array(labels_train), np.array(labels_test)
+            # Load validation images
+            validation_filename = f"{digit}_{sample_idx}.bmp"
+            validation_file_path = os.path.join(validation_dir, validation_filename)
+            if os.path.exists(validation_file_path):
+                img_validation = Image.open(validation_file_path).convert('L')
+                img_validation = img_validation.resize((28, 28))
+                images_validation.append(np.array(img_validation))
+                labels_validation.append(digit)
+
+    return np.array(images_train), np.array(images_test), np.array(images_validation), np.array(labels_train), np.array(labels_test), np.array(labels_validation)
+    
 
 
+images_train, images_test, images_validation, labels_train, labels_test, labels_validation = load_data('./images/thomas')
 
-
-images_train,images_test,labels_train,labels_test = load_data('images')
 print(images_train.shape)
 print(images_test.shape)
+print(images_validation.shape)
 
-images_validation = images_test[:15]
-labels_validation = labels_test[:15]
-
-images_test = images_test[15:]
-labels_test = labels_test[15:]
-
-
-
+print("Labels de images_test :", labels_test)
+print("Labels de images_validation :", labels_validation)
 
 
 
@@ -53,16 +75,16 @@ images_test = images_test / 255
 images_train = images_train / 255
 images_validation = images_validation / 255
 
-# print(images_test[0])
-
 
 images_train = images_train.reshape((images_train.shape[0], 28*28)).astype('float32')
 images_test = images_test.reshape((images_test.shape[0], 28*28)).astype('float32')
 images_validation = images_validation.reshape((images_validation.shape[0], 28*28)).astype('float32')
 
+
 print(images_train.shape)
 print(images_test.shape)
 print(images_validation.shape)
+
 
 
 model = Sequential()
@@ -74,7 +96,7 @@ model.add(Dense(10, activation='softmax'))
 # model.summary()
 model.compile(loss='sparse_categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-history = model.fit(epochs=5,batch_size=1, x=images_train, y=labels_train, validation_data=(images_validation, labels_validation))
+history = model.fit(epochs=25,batch_size=1, x=images_train, y=labels_train, validation_data=(images_validation, labels_validation))
 
 predictions = model.predict(images_test)
 
