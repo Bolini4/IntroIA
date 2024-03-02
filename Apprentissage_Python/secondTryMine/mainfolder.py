@@ -75,17 +75,7 @@ images_test = images_test / 255
 images_train = images_train / 255
 images_validation = images_validation / 255
 
-# print(images_test[0])
 
-plt.figure(figsize=(10, 10))
-for i in range(20):
-    plt.subplot(4, 5, i + 1)
-    plt.xticks([])  # Supprimer les graduations sur l'axe des x
-    plt.yticks([])  # Supprimer les graduations sur l'axe des y
-    plt.grid(False)  # Désactiver la grille
-    plt.imshow(images_train[i], cmap='gist_gray')  # Afficher l'image en niveaux de gris
-    plt.xlabel(labels_train[i])  # Ajouter l'étiquette comme xlabel
-plt.show()
 images_train = images_train.reshape((images_train.shape[0], 28*28)).astype('float32')
 images_test = images_test.reshape((images_test.shape[0], 28*28)).astype('float32')
 images_validation = images_validation.reshape((images_validation.shape[0], 28*28)).astype('float32')
@@ -113,7 +103,7 @@ predictions = model.predict(images_test)
 for i in range(len(predictions)):
     print("Image", i + 1, " - Prédiction:", np.argmax(predictions[i]), " - Vérité:", labels_test[i])
 #Sauvegarde du modèle
-model.save('modelme.h5')
+model.save('modelme.keras')
 
 
 # Affichage de l'historique de la précision
