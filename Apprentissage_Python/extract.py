@@ -23,5 +23,5 @@ for i, layer_weights_biases in enumerate(weights_biases):
     print(np.sum(layer_biases))
     print(np.sum(layer_weights, axis=1))
 
-    # np.savetxt(f"layer_{i + 1}_weights.txt", layer_weights, fmt='%f')
-    # np.savetxt(f"layer_{i + 1}_biases.txt", layer_biases, fmt='%f')
+    # np.savetxt(f"weightandbiases/layer_{i + 1}_weights.txt", layer_weights, fmt='%f')
+    # np.savetxt(f"weightandbiases/layer_{i + 1}_biases.txt", layer_biases, fmt='%f')

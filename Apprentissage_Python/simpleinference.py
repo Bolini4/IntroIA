@@ -37,9 +37,9 @@ second_layer_activations = activations[1]
 third_layer_activations = activations[2]
 
 # Sauvegarder les activations dans un fichier texte
-np.savetxt('activations_second_layer.txt', second_layer_activations)
-np.savetxt('activations_first_layer.txt', first_layer_activations)
-np.savetxt('activations_third_layer.txt', third_layer_activations)
+np.savetxt('layers/activations_second_layer.txt', second_layer_activations)
+np.savetxt('layers/activations_first_layer.txt', first_layer_activations)
+np.savetxt('layers/activations_third_layer.txt', third_layer_activations)
 
 sum1 = np.sum(first_layer_activations)
 sum2 = np.sum(second_layer_activations)
