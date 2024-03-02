@@ -22,6 +22,7 @@ Le dossier Apprentissage_Python contient plusieurs actions possibles :
 ## Dossier Inference_C
 
 1. S'assurer que le dossier weightandbiases est présent.
+2. Pour modifier l'image à tester, modifier la ligne 23 de main.py
 
 2. Executer le projet
 ```bash
