@@ -2,7 +2,7 @@ import numpy as np
 import tensorflow as tf
 
 # Charger le modèle Keras
-model = tf.keras.models.load_model('modelme.txt')
+model = tf.keras.models.load_model('modelme.keras')
 
 # Extraire les poids et les biais de chaque couche
 weights_biases = []

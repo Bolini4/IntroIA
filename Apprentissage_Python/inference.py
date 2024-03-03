@@ -3,7 +3,7 @@ from tensorflow.keras.preprocessing import image
 import numpy as np
 import tensorflow as tf
 
-model = tf.keras.models.load_model('modelme.h5')
+model = tf.keras.models.load_model('modelme.keras')
 
 folder_path = '../datas/thomas'  # Chemin vers le dossier contenant les images
 
