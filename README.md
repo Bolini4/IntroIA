@@ -30,3 +30,5 @@ make veryclean
 make
 ./all
 ```
+
+Le code pour la phase d'inférence est également disponible sur la raspberry fournie.
